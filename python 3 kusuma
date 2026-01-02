@@ -1,0 +1,54 @@
+import os
+import shutil
+
+# --- Configuration ---
+# Define the source and destination folder paths
+# Replace 'path/to/your/source_folder' and 'path/to/your/destination_folder' 
+# with the actual paths on your computer.
+SOURCE_FOLDER = 'path/to/your/source_folder'
+DESTINATION_FOLDER = 'path/to/your/destination_folder'
+# ---------------------
+
+def organize_jpg_files(source_dir, dest_dir):
+    """
+    Moves all .jpg files from source_dir to dest_dir.
+    """
+    print(f"Starting organization from: {source_dir}")
+    print(f"Moving files to: {dest_dir}")
+
+    # 1. Ensure the destination directory exists
+    if not os.path.exists(dest_dir):
+        os.makedirs(dest_dir)
+        print(f"Created destination folder: {dest_dir}")
+
+    # 2. Iterate through all items in the source directory
+    for filename in os.listdir(source_dir):
+        # Construct the full path to the file
+        source_path = os.path.join(source_dir, filename)
+
+        # Check if it's a file and ends with .jpg
+        if os.path.isfile(source_path) and filename.lower().endswith('.jpg'):
+            # Construct the full path in the destination directory
+            destination_path = os.path.join(dest_dir, filename)
+
+            try:
+                # 3. Move the file
+                shutil.move(source_path, destination_path)
+                print(f"Moved: {filename}")
+            except shutil.Error as e:
+                print(f"Error moving {filename}: {e}")
+            except Exception as e:
+                print(f"An unexpected error occurred with {filename}: {e}")
+
+    print("Organization complete.")
+
+if __name__ == "__main__":
+    # Ensure you update these paths before running the script
+    # For example:
+    # SOURCE_FOLDER = '/Users/YourUsername/Downloads/unorganized_photos'
+    # DESTINATION_FOLDER = '/Users/YourUsername/Documents/My_JPG_Files'
+    
+    if SOURCE_FOLDER == 'path/to/your/source_folder' or DESTINATION_FOLDER == 'path/to/your/destination_folder':
+        print("Please update the SOURCE_FOLDER and DESTINATION_FOLDER variables in the script before running.")
+    else:
+        organize_jpg_files(SOURCE_FOLDER, DESTINATION_FOLDER)
